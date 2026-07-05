@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>BOOST LANKA — Your Trusted Social Media Growth Partner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --surface2: #111111;
+            --surface3: #1a1a1a;
+            --border: #2a2a2a;
+            --border-light: #333333;
+            --text: #f0f0f0;
+            --text-secondary: #aaaaaa;
+            --text-muted: #666666;
+            --accent-gold: #d4a853;
+            --accent-gold-light: #e8c97a;
+            --tiktok: #ff0050;
+            --instagram: #E1306C;
+            --facebook: #1877F2;
+            --youtube: #FF0000;
+            --whatsapp: #25D366;
+            --shadow-gold: 0 0 30px rgba(212, 168, 83, 0.15);
+            --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        body {
+            font-family: 'Segoe UI', 'Poppins', 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            cursor: default;
+            position: relative;
+        }
+
+        /* Cursor glow hidden on mobile automatically via media query */
+        .cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                    rgba(212, 168, 83, 0.04) 0%, transparent 80%);
+            transition: background 0.1s ease;
+            display: none;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .cursor-glow { display: block; }
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridShift 25s linear infinite;
+        }
+        @keyframes gridShift {
+            0% { background-position: 0 0, 0 0; }
+            100% { background-position: 60px 60px, -60px 60px; }
+        }
+
+        .golden-orbs {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .golden-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.06;
+            animation: orbPulse 10s ease-in-out infinite;
+        }
+        .golden-orb:nth-child(1) { width: 500px; height: 500px; background: var(--accent-gold); top: -10%; left: -5%; }
+        .golden-orb:nth-child(2) { width: 400px; height: 400px; background: #ffffff; top: 50%; right: -8%; opacity: 0.03; animation-delay: -4s; }
+        .golden-orb:nth-child(3) { width: 350px; height: 350px; background: var(--accent-gold); bottom: -8%; left: 30%; opacity: 0.04; animation-delay: -7s; }
+        @keyframes orbPulse {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            25% { transform: scale(1.3) translate(40px, -50px); }
+            50% { transform: scale(0.85) translate(-30px, 30px); }
+            75% { transform: scale(1.2) translate(-20px, -30px); }
+        }
+
+        .luxury-particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+        .lux-particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatLux 12s ease-in-out infinite;
+            opacity: 0;
+        }
+        @keyframes floatLux {
+            0% { transform: translateY(105vh) translateX(0) scale(0); opacity: 0; }
+            5% { opacity: 0.6; }
+            50% { opacity: 0.25; }
+            95% { opacity: 0.03; }
+            100% { transform: translateY(-10vh) translateX(80px) scale(1.8); opacity: 0; }
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 10px 15px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 15px 25px;
+            position: relative;
+        }
+        .floating-icons {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .float-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.45;
+            animation: floatIcon 8s ease-in-out infinite;
+        }
+        .float-icon:nth-child(1) { top: 8%; left: 8%; color: var(--tiktok); animation-delay: 0s; }
+        .float-icon:nth-child(2) { top: 12%; right: 10%; color: var(--whatsapp); animation-delay: -2s; }
+        .float-icon:nth-child(3) { bottom: 18%; left: 12%; color: var(--facebook); animation-delay: -4s; }
+        .float-icon:nth-child(4) { bottom: 12%; right: 8%; color: var(--youtube); animation-delay: -6s; }
+        .float-icon:nth-child(5) { top: 35%; left: 50%; color: var(--instagram); animation-delay: -3s; }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-18px) rotate(8deg); }
+            50% { transform: translateY(-4px) rotate(-4deg); }
+            75% { transform: translateY(-22px) rotate(6deg); }
+        }
+
+        .logo-crown {
+            font-size: 45px;
+            display: inline-block;
+            animation: crownFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(212,168,83,0.5));
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes crownFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-16px) rotate(-3deg); }
+            50% { transform: translateY(-4px) rotate(0deg); }
+            75% { transform: translateY(-20px) rotate(3deg); }
+        }
+        .brand-name {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(180deg, #ffffff 0%, #c0c0c0 35%, #d4a853 65%, #b8922e 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: metallicShine 4s ease-in-out infinite;
+            margin: 8px 0;
+            line-height: 1.2;
+        }
+        @keyframes metallicShine {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+        .tagline {
+            font-size: 0.9rem;
+            color: var(--accent-gold-light);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 300;
+            margin: 0 auto;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--accent-gold);
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+            width: fit-content;
+        }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: var(--accent-gold); } }
+
+        .active-members {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface2);
+            border: 1px solid var(--border-light);
+            border-radius: 40px;
+            padding: 8px 22px;
+            margin-top: 15px;
+            box-shadow: 0 0 20px rgba(212,168,83,0.1);
+            animation: subtlePulse 3s ease-in-out infinite;
+        }
+        .pulse-ring {
+            width: 10px; height: 10px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--accent-gold);
+            animation: ringPulse 1.8s ease-in-out infinite;
+            position: relative;
+        }
+        .pulse-ring::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-gold);
+            animation: ringExpand 1.8s ease-in-out infinite;
+        }
+        @keyframes ringPulse {
+            0%, 100% { box-shadow: 0 0 12px var(--accent-gold); }
+            50% { box-shadow: 0 0 28px var(--accent-gold), 0 0 45px rgba(212,168,83,0.5); }
+        }
+        @keyframes ringExpand {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(2.5); opacity: 0; }
+        }
+        @keyframes subtlePulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(212,168,83,0.1); }
+            50% { box-shadow: 0 0 35px rgba(212,168,83,0.2); }
+        }
+        .active-count { font-size: 1.3rem; font-weight: 700; color: #fff; }
+
+        /* ---------- MOBILE NAVIGATION (swipeable) ---------- */
+        .nav-bar {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            gap: 4px;
+            padding: 6px 8px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: rgba(10,10,10,0.88);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            margin: 10px 0 25px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 6px 30px rgba(0,0,0,0.5);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .nav-bar::-webkit-scrollbar {
+            display: none;
+        }
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .nav-link i { font-size: 0.8rem; }
+        .nav-link:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .nav-link.active {
+            background: var(--accent-gold);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 4px 18px rgba(212,168,83,0.5);
+        }
+
+        /* Section title */
+        .section-title {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 800;
+            margin: 30px 0 18px;
+            letter-spacing: 1px;
+            color: #fff;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-gold);
+            margin: 8px auto 0;
+            border-radius: 3px;
+            animation: widenLine 3s ease-in-out infinite;
+        }
+        @keyframes widenLine {
+            0%, 100% { width: 40px; opacity: 0.7; }
+            50% { width: 75px; opacity: 1; }
+        }
+
+        /* Platforms grid */
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .platform-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 22px 12px;
+            text-align: center;
+            transition: all 0.35s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            color: #ddd;
+        }
+        .platform-card.available {
+            border-color: rgba(212,168,83,0.4);
+            box-shadow: 0 3px 25px rgba(212,168,83,0.15);
+            background: var(--surface3);
+        }
+        .platform-card.unavailable { opacity: 0.8; border-color: rgba(255,255,255,0.06); }
+        .platform-card.available::after {
+            content: '';
+            position: absolute;
+            top: -40%; left: -40%; width: 180%; height: 180%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.03) 48%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 52%, transparent 60%);
+            animation: shineSweep 3.5s ease-in-out infinite;
+        }
+        @keyframes shineSweep {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        .platform-icon { font-size: 2.5rem; margin-bottom: 10px; display: block; }
+        .platform-name { font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .status-available { background: rgba(212,168,83,0.2); color: var(--accent-gold-light); }
+        .status-unavailable { background: rgba(255,255,255,0.03); color: #777; }
+        .coming-soon-tag { font-size: 0.65rem; color: #888; margin-top: 4px; }
+
+        /* Packages */
+        .packages-wrapper {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 20px 15px;
+            margin: 20px 0;
+            box-shadow: var(--shadow-lg);
+        }
+        .packages-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .packages-header .pk-icon { font-size: 2rem; }
+        .packages-header h3 { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
+        .package-category { margin-bottom: 20px; }
+        .package-category h4 {
+            font-size: 0.9rem; font-weight: 700; color: #ccc;
+            display: flex; align-items: center; gap: 6px;
+            letter-spacing: 1px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 10px;
+        }
+        .package-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+        }
+        .pkg-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+        }
+        .pkg-card:active { transform: scale(0.94); }
+        .pkg-card .pkg-amount { font-weight: 700; font-size: 0.9rem; color: #fff; }
+        .pkg-card .pkg-price { font-weight: 800; font-size: 1.1rem; color: var(--accent-gold-light); }
+        .pkg-card .pkg-buy-hint {
+            font-size: 0.65rem; color: var(--text-muted);
+            opacity: 0; transition: opacity 0.2s;
+        }
+        .pkg-card:active .pkg-buy-hint, .pkg-card:focus .pkg-buy-hint { opacity: 1; }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(212,168,83,0.5);
+            transform: scale(0);
+            animation: rippleEffect 0.6s ease-out forwards;
+            pointer-events: none;
+        }
+        @keyframes rippleEffect { to { transform: scale(3.5); opacity: 0; } }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-box {
+            background: var(--surface2);
+            border: 1px solid var(--border-light);
+            border-radius: 18px;
+            padding: 25px 20px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-box { transform: translateY(0); }
+        .modal-box h3 { font-size: 1.3rem; margin-bottom: 8px; }
+        .modal-detail { color: var(--accent-gold-light); font-weight: 700; font-size: 1rem; }
+        .modal-price { font-size: 1.8rem; font-weight: 900; color: #fff; margin: 10px 0; }
+        .modal-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
+        .btn-gold, .btn-outline {
+            padding: 12px 22px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+        .btn-gold { background: linear-gradient(135deg, #d4a853, #b8922e); color: #000; }
+        .btn-outline { background: transparent; color: #fff; border: 1px solid var(--border-light); }
+
+        /* Info */
+        .info-section {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 18px 15px;
+            margin: 20px 0;
+        }
+        .info-section h3 { font-size: 1rem; margin-bottom: 10px; }
+        .info-list li { padding: 7px 0; font-size: 0.8rem; color: #aaa; border-bottom: 1px solid rgba(255,255,255,0.03); }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .faq-question { padding: 14px 16px; font-size: 0.85rem; font-weight: 700; display: flex; justify-content: space-between; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; padding: 0 16px; color: #999; font-size: 0.78rem; }
+        .faq-item.open .faq-answer { max-height: 150px; padding: 0 16px 12px; }
+
+        /* Contact */
+        .contact-section { padding: 25px 15px; border-radius: 18px; margin: 20px 0; text-align: center; background: var(--surface); border: 1px solid var(--border-light); }
+        .whatsapp-btn-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-light);
+            animation: floatUpDown 3s ease-in-out infinite;
+        }
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .contact-number { font-size: 1rem; margin-top: 10px; }
+
+        .footer { font-size: 0.7rem; padding: 15px; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            z-index: 999;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+            font-size: 0.85rem;
+        }
+
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 640px) {
+            .brand-name { font-size: 2.4rem; }
+            .platforms-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+            .platform-card { padding: 18px 8px; border-radius: 14px; }
+            .platform-icon { font-size: 2rem; }
+            .package-cards { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+            .pkg-card { padding: 12px 8px; }
+            .pkg-card .pkg-amount { font-size: 0.8rem; }
+            .pkg-card .pkg-price { font-size: 1rem; }
+            .section-title { font-size: 1.4rem; }
+            .packages-header h3 { font-size: 1.3rem; }
+        }
+        @media (max-width: 400px) {
+            .brand-name { font-size: 2rem; letter-spacing: 1px; }
+            .logo-crown { font-size: 36px; }
+            .platforms-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+            .platform-card { padding: 14px 6px; }
+            .platform-icon { font-size: 1.8rem; }
+            .package-cards { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+            .pkg-card { padding: 10px 6px; border-radius: 10px; }
+            .pkg-card .pkg-price { font-size: 0.9rem; }
+            .nav-link { padding: 6px 12px; font-size: 0.7rem; }
+            .tagline { font-size: 0.7rem; letter-spacing: 3px; }
+            .modal-box { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="grid-bg"></div>
+    <div class="golden-orbs">
+        <div class="golden-orb"></div>
+        <div class="golden-orb"></div>
+        <div class="golden-orb"></div>
+    </div>
+    <div class="luxury-particles" id="luxParticles"></div>
+
+    <div class="main-container">
+        <header class="header" id="home">
+            <div class="floating-icons">
+                <i class="fab fa-tiktok float-icon"></i>
+                <i class="fab fa-whatsapp float-icon"></i>
+                <i class="fab fa-facebook float-icon"></i>
+                <i class="fab fa-youtube float-icon"></i>
+                <i class="fab fa-instagram float-icon"></i>
+            </div>
+            <div class="logo-crown">👑</div>
+            <h1 class="brand-name">BOOST LANKA</h1>
+            <p class="tagline">Your Trusted Partner for Social Media Growth</p>
+            <div class="active-members">
+                <span class="pulse-ring"></span>
+                <span class="active-count">612+</span>
+                <span style="color:#aaa;">Active Members</span>
+            </div>
+        </header>
+
+        <nav class="nav-bar" id="navBar">
+            <a href="#home" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+            <a href="#tiktokSection" class="nav-link"><i class="fab fa-tiktok"></i> TikTok</a>
+            <a href="#facebookCard" class="nav-link"><i class="fab fa-facebook"></i> FB</a>
+            <a href="#instagramCard" class="nav-link"><i class="fab fa-instagram"></i> IG</a>
+            <a href="#youtubeCard" class="nav-link"><i class="fab fa-youtube"></i> YT</a>
+            <a href="#whatsappCard" class="nav-link"><i class="fab fa-whatsapp"></i> WA</a>
+            <a href="#faq" class="nav-link"><i class="fas fa-question-circle"></i> FAQ</a>
+            <a href="#contact" class="nav-link"><i class="fas fa-phone"></i> Contact</a>
+        </nav>
+
+        <h2 class="section-title">Our Platforms</h2>
+        <div class="platforms-grid">
+            <div class="platform-card available" onclick="document.getElementById('tiktokSection').scrollIntoView({behavior:'smooth'}); playTapSound();">
+                <i class="fab fa-tiktok platform-icon" style="color: var(--tiktok);"></i>
+                <div class="platform-name">TIK TOK</div>
+                <span class="status-badge status-available">AVAILABLE</span>
+            </div>
+            <div class="platform-card unavailable" id="instagramCard">
+                <i class="fab fa-instagram platform-icon" style="color: var(--instagram);"></i>
+                <div class="platform-name">INSTAGRAM</div>
+                <span class="status-badge status-unavailable">UNAVAILABLE</span>
+                <p class="coming-soon-tag">✦ Coming Soon</p>
+            </div>
+            <div class="platform-card unavailable" id="facebookCard">
+                <i class="fab fa-facebook platform-icon" style="color: var(--facebook);"></i>
+                <div class="platform-name">FACEBOOK</div>
+                <span class="status-badge status-unavailable">UNAVAILABLE</span>
+                <p class="coming-soon-tag">✦ Coming Soon</p>
+            </div>
+            <div class="platform-card unavailable" id="whatsappCard">
+                <i class="fab fa-whatsapp platform-icon" style="color: var(--whatsapp);"></i>
+                <div class="platform-name">WHATSAPP</div>
+                <span class="status-badge status-unavailable">UNAVAILABLE</span>
+                <p class="coming-soon-tag">✦ Coming Soon</p>
+            </div>
+            <div class="platform-card unavailable" id="youtubeCard">
+                <i class="fab fa-youtube platform-icon" style="color: var(--youtube);"></i>
+                <div class="platform-name">YOUTUBE</div>
+                <span class="status-badge status-unavailable">UNAVAILABLE</span>
+                <p class="coming-soon-tag">✦ Coming Soon</p>
+            </div>
+        </div>
+
+        <div class="packages-wrapper" id="tiktokSection">
+            <div class="packages-header">
+                <i class="fab fa-tiktok pk-icon" style="color: var(--tiktok); text-shadow: 0 0 15px rgba(255,0,80,0.5);"></i>
+                <h3>TIK TOK BOOST</h3>
+            </div>
+
+            <div class="package-category">
+                <h4><i class="fas fa-heart"></i> LIKES — AVAILABLE</h4>
+                <div class="package-cards">
+                    <div class="pkg-card" onclick="openModal('TikTok Likes', '500 Likes', 'LKR 250')"><span class="pkg-amount">500 Likes</span><span class="pkg-price">Rs.250</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Likes', '1K Likes', 'LKR 425')"><span class="pkg-amount">1K Likes</span><span class="pkg-price">Rs.425</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Likes', '2K Likes', 'LKR 800')"><span class="pkg-amount">2K Likes</span><span class="pkg-price">Rs.800</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Likes', '5K Likes', 'LKR 1,900')"><span class="pkg-amount">5K Likes</span><span class="pkg-price">Rs.1,900</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Likes', '10K Likes', 'LKR 3,500')"><span class="pkg-amount">10K Likes</span><span class="pkg-price">Rs.3,500</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                </div>
+            </div>
+
+            <div class="package-category">
+                <h4><i class="fas fa-eye"></i> VIEWS — AVAILABLE</h4>
+                <div class="package-cards">
+                    <div class="pkg-card" onclick="openModal('TikTok Views', '1K Views', 'LKR 200')"><span class="pkg-amount">1K Views</span><span class="pkg-price">Rs.200</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Views', '5K Views', 'LKR 650')"><span class="pkg-amount">5K Views</span><span class="pkg-price">Rs.650</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Views', '10K Views', 'LKR 800')"><span class="pkg-amount">10K Views</span><span class="pkg-price">Rs.800</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Views', '15K Views', 'LKR 1,250')"><span class="pkg-amount">15K Views</span><span class="pkg-price">Rs.1,250</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Views', '50K Views', 'LKR 2,250')"><span class="pkg-amount">50K Views</span><span class="pkg-price">Rs.2,250</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Views', '100K Views', 'LKR 3,850')"><span class="pkg-amount">100K Views</span><span class="pkg-price">Rs.3,850</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                </div>
+            </div>
+
+            <div class="package-category">
+                <h4><i class="fas fa-users"></i> FOLLOWERS — AVAILABLE</h4>
+                <div class="package-cards">
+                    <div class="pkg-card" onclick="openModal('TikTok Followers', '500 Followers', 'LKR 300')"><span class="pkg-amount">500 Followers</span><span class="pkg-price">Rs.300</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Followers', '1K Followers', 'LKR 750')"><span class="pkg-amount">1K Followers</span><span class="pkg-price">Rs.750</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Followers', '3K Followers', 'LKR 2,050')"><span class="pkg-amount">3K Followers</span><span class="pkg-price">Rs.2,050</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Followers', '5K Followers', 'LKR 3,600')"><span class="pkg-amount">5K Followers</span><span class="pkg-price">Rs.3,600</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Followers', '10K Followers', 'LKR 6,500')"><span class="pkg-amount">10K Followers</span><span class="pkg-price">Rs.6,500</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                </div>
+            </div>
+
+            <div class="package-category">
+                <h4><i class="fas fa-star"></i> FAVORITES — AVAILABLE</h4>
+                <div class="package-cards">
+                    <div class="pkg-card" onclick="openModal('TikTok Favorites', '100 Favorites', 'LKR 60')"><span class="pkg-amount">100 Fav</span><span class="pkg-price">Rs.60</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Favorites', '500 Favorites', 'LKR 120')"><span class="pkg-amount">500 Fav</span><span class="pkg-price">Rs.120</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Favorites', '1000 Favorites', 'LKR 230')"><span class="pkg-amount">1000 Fav</span><span class="pkg-price">Rs.230</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Favorites', '1500 Favorites', 'LKR 300')"><span class="pkg-amount">1500 Fav</span><span class="pkg-price">Rs.300</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                </div>
+            </div>
+
+            <div class="package-category">
+                <h4><i class="fas fa-share-alt"></i> SHARES — AVAILABLE</h4>
+                <div class="package-cards">
+                    <div class="pkg-card" onclick="openModal('TikTok Shares', '50 Shares', 'LKR 50')"><span class="pkg-amount">50 Shares</span><span class="pkg-price">Rs.50</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Shares', '150 Shares', 'LKR 100')"><span class="pkg-amount">150 Shares</span><span class="pkg-price">Rs.100</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Shares', '400 Shares', 'LKR 150')"><span class="pkg-amount">400 Shares</span><span class="pkg-price">Rs.150</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                    <div class="pkg-card" onclick="openModal('TikTok Shares', '500 Shares', 'LKR 250')"><span class="pkg-amount">500 Shares</span><span class="pkg-price">Rs.250</span><span class="pkg-buy-hint">TAP TO BUY</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3><i class="fas fa-exclamation-triangle"></i> IMPORTANT INFORMATION</h3>
+            <ul class="info-list">
+                <li>Do not attempt to boost private pages. Boosting available for public accounts only.</li>
+                <li>All sales are final. No money return policy.</li>
+                <li>Delivery typically within 1-24 hours.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-title" id="faq">Frequently Asked Questions</h2>
+        <div class="faq-section">
+            <div class="faq-item" onclick="toggleFaq(this); playTapSound();"><div class="faq-question">Which platforms can I boost? <span>▼</span></div><div class="faq-answer">Currently only TikTok. Others coming soon.</div></div>
+            <div class="faq-item" onclick="toggleFaq(this); playTapSound();"><div class="faq-question">How do I pay? <span>▼</span></div><div class="faq-answer">Contact us via WhatsApp for payment options.</div></div>
+            <div class="faq-item" onclick="toggleFaq(this); playTapSound();"><div class="faq-question">Delivery time? <span>▼</span></div><div class="faq-answer">1-24 hours for most packages.</div></div>
+            <div class="faq-item" onclick="toggleFaq(this); playTapSound();"><div class="faq-question">Refund possible? <span>▼</span></div><div class="faq-answer">No, all sales are final.</div></div>
+            <div class="faq-item" onclick="toggleFaq(this); playTapSound();"><div class="faq-question">Private account boost? <span>▼</span></div><div class="faq-answer">Only public accounts allowed.</div></div>
+        </div>
+
+        <div class="contact-section" id="contact">
+            <h2 style="font-size:1.3rem;"><i class="fas fa-headset"></i> CONTACT US</h2>
+            <p style="color:#888; margin:8px 0;">Reach out via WhatsApp</p>
+            <a href="https://wa.me/94703209590" target="_blank" class="whatsapp-btn-large" onclick="playTapSound();"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+            <p class="contact-number"><i class="fas fa-phone-alt"></i> +94 70 320 9590</p>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 BOOST LANKA — All Rights Reserved 🚀</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <h3>🛒 Confirm Your Order</h3>
+            <p class="modal-detail" id="modalCategory">TikTok Likes</p>
+            <p style="color:#ccc;" id="modalPackage">500 Likes</p>
+            <p class="modal-price" id="modalPrice">LKR 250</p>
+            <div class="modal-btns">
+                <button class="btn-outline" onclick="closeModal(); playTapSound();">Cancel</button>
+                <button class="btn-gold" onclick="confirmOrder(); playConfirmSound();">Confirm Order</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer"></div>
+
+    <script>
+        (function() {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            let audioCtx;
+            function initAudio() {
+                if (!audioCtx) audioCtx = new AudioContext();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+            }
+            function playTapSound() {
+                initAudio();
+                if (!audioCtx) return;
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(700, now);
+                osc.frequency.exponentialRampToValueAtTime(200, now + 0.1);
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(now); osc.stop(now + 0.15);
+            }
+            function playConfirmSound() {
+                initAudio();
+                if (!audioCtx) return;
+                const now = audioCtx.currentTime;
+                [350, 550, 800].forEach((freq, i) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + i*0.06);
+                    gain.gain.setValueAtTime(0.12, now + i*0.06);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + i*0.06 + 0.2);
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.start(now + i*0.06); osc.stop(now + i*0.06 + 0.2);
+                });
+            }
+
+            const cursorGlow = document.getElementById('cursorGlow');
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.setProperty('--mouse-x', e.clientX + 'px');
+                cursorGlow.style.setProperty('--mouse-y', e.clientY + 'px');
+            });
+
+            const luxContainer = document.getElementById('luxParticles');
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.classList.add('lux-particle');
+                p.style.left = Math.random()*100+'%';
+                p.style.width = (1.2+Math.random()*3)+'px';
+                p.style.height = p.style.width;
+                p.style.animationDelay = Math.random()*10+'s';
+                p.style.animationDuration = (7+Math.random()*14)+'s';
+                p.style.background = ['#d4a853','#e8c97a','#ffffff'][Math.floor(Math.random()*3)];
+                p.style.boxShadow = `0 0 4px ${p.style.background}`;
+                luxContainer.appendChild(p);
+            }
+
+            let currentOrder = {};
+            window.openModal = function(cat, pkg, price) {
+                initAudio(); playTapSound();
+                currentOrder = {cat, pkg, price};
+                document.getElementById('modalCategory').textContent = cat;
+                document.getElementById('modalPackage').textContent = pkg;
+                document.getElementById('modalPrice').textContent = price;
+                document.getElementById('modalOverlay').classList.add('active');
+                if(event && event.target) addRipple(event);
+            };
+            window.closeModal = function() { playTapSound(); document.getElementById('modalOverlay').classList.remove('active'); };
+            window.confirmOrder = function() {
+                playConfirmSound();
+                const {cat, pkg, price} = currentOrder;
+                const msg = `🛒 *BOOST LANKA Order*%0A📦 ${cat}%0A📊 ${pkg}%0A💰 ${price}%0A%0A👤 *Username:* %0A🔗 *Link:* %0A_Please confirm._ 🚀`;
+                closeModal();
+                showToast('✅ Opening WhatsApp...');
+                setTimeout(() => window.open(`https://wa.me/94703209590?text=${msg}`, '_blank'), 300);
+            };
+            document.getElementById('modalOverlay').addEventListener('click', e => { if(e.target === e.currentTarget) closeModal(); });
+
+            function addRipple(e) {
+                const card = e.target.closest('.pkg-card');
+                if(!card) return;
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const rect = card.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size+'px';
+                ripple.style.left = (e.clientX - rect.left - size/2)+'px';
+                ripple.style.top = (e.clientY - rect.top - size/2)+'px';
+                card.appendChild(ripple);
+                ripple.addEventListener('animationend', () => ripple.remove());
+            }
+
+            function showToast(msg) {
+                const t = document.createElement('div'); t.className='toast'; t.textContent=msg;
+                document.getElementById('toastContainer').appendChild(t);
+                setTimeout(() => t.remove(), 2500);
+            }
+
+            window.toggleFaq = function(el) {
+                const open = el.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                if(!open) el.classList.add('open');
+            };
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    initAudio(); playTapSound();
+                    const id = this.getAttribute('href');
+                    if(id && id.startsWith('#')) {
+                        e.preventDefault();
+                        const target = document.querySelector(id);
+                        if(target) target.scrollIntoView({behavior:'smooth'});
+                    }
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            window.addEventListener('scroll', () => {
+                const links = document.querySelectorAll('.nav-link');
+                let current = 'home';
+                document.querySelectorAll('[id]').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if(rect.top <= 120 && rect.bottom >= 120 && el.id) current = el.id;
+                });
+                links.forEach(l => {
+                    l.classList.remove('active');
+                    if(l.getAttribute('href') === '#'+current) l.classList.add('active');
+                });
+            });
+
+            document.querySelectorAll('.pkg-card').forEach(c => c.addEventListener('click', e => addRipple(e)));
+            document.querySelectorAll('.platform-card').forEach(c => c.addEventListener('click', () => { initAudio(); playTapSound(); }));
+            document.body.addEventListener('click', initAudio, {once: true});
+            document.body.addEventListener('touchstart', initAudio, {once: true});
+        })();
+    </script>
+</body>
+</html>
