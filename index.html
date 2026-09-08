@@ -7,13 +7,13 @@
     <style>
         :root {
             --white: #ffffff;
-            --off-white: #f7f9fc;
-            --light-blue: #e8f0fe;
-            --lighter-blue: #f0f7ff;
-            --blue-100: #d0e4ff;
-            --blue-200: #a8cfff;
-            --blue-300: #7ab8f5;
-            --blue-400: #4d9ef0;
+            --off-white: #f5f8fd;
+            --light-blue: #e6f0ff;
+            --lighter-blue: #f0f6ff;
+            --blue-100: #d4e6ff;
+            --blue-200: #a8cdff;
+            --blue-300: #7ab5f8;
+            --blue-400: #4d9af0;
             --blue-500: #1e7de0;
             --blue-600: #1565c0;
             --blue-700: #0d47a1;
@@ -29,13 +29,15 @@
             --shadow-sm: 0 2px 10px rgba(10, 42, 94, 0.06);
             --shadow-md: 0 8px 30px rgba(10, 42, 94, 0.1);
             --shadow-lg: 0 20px 50px rgba(10, 42, 94, 0.15);
-            --shadow-glow: 0 0 40px rgba(30, 125, 224, 0.15);
+            --shadow-glow: 0 0 40px rgba(30, 125, 224, 0.2);
+            --shadow-neon: 0 0 60px rgba(30, 125, 224, 0.35);
             --radius-sm: 8px;
             --radius-md: 14px;
             --radius-lg: 20px;
             --radius-xl: 28px;
             --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --font-main: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            --transition-slow: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         * {
@@ -46,22 +48,82 @@
 
         html {
             scroll-behavior: smooth;
+            cursor: default;
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--off-white);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
             background-image:
-                radial-gradient(ellipse at 10% 20%, rgba(30, 125, 224, 0.04) 0%, transparent 55%),
-                radial-gradient(ellipse at 90% 80%, rgba(13, 71, 161, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(168, 207, 255, 0.03) 0%, transparent 70%);
+                radial-gradient(ellipse at 10% 20%, rgba(30, 125, 224, 0.05) 0%, transparent 55%),
+                radial-gradient(ellipse at 90% 80%, rgba(13, 71, 161, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(168, 207, 255, 0.04) 0%, transparent 70%);
             background-attachment: fixed;
         }
 
-        /* Animated floating shapes */
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--off-white);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--blue-300);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--blue-500);
+        }
+
+        /* ===== CURSOR GLOW ===== */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(circle, rgba(30, 125, 224, 0.08) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out, opacity 0.3s;
+            opacity: 0;
+            mix-blend-mode: multiply;
+        }
+        .cursor-glow.visible {
+            opacity: 1;
+        }
+
+        /* ===== BACKGROUND GRID ===== */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(30, 125, 224, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 125, 224, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridShift 15s linear infinite;
+            opacity: 0.6;
+        }
+        @keyframes gridShift {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 40px 40px;
+            }
+        }
+
+        /* ===== FLOATING SHAPES ===== */
         .bg-shapes {
             position: fixed;
             top: 0;
@@ -77,72 +139,93 @@
             border-radius: 50%;
             background: rgba(30, 125, 224, 0.06);
             animation: floatShape 20s infinite ease-in-out;
+            filter: blur(2px);
         }
         .bg-shape:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: -100px;
-            right: -100px;
+            width: 350px;
+            height: 350px;
+            top: -120px;
+            right: -120px;
             animation-delay: 0s;
         }
         .bg-shape:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            bottom: -50px;
-            left: -50px;
+            width: 250px;
+            height: 250px;
+            bottom: -70px;
+            left: -70px;
             animation-delay: -5s;
             background: rgba(13, 71, 161, 0.05);
         }
         .bg-shape:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            top: 40%;
-            right: 10%;
+            width: 180px;
+            height: 180px;
+            top: 35%;
+            right: 8%;
             animation-delay: -10s;
-            background: rgba(168, 207, 255, 0.08);
+            background: rgba(168, 207, 255, 0.1);
         }
         .bg-shape:nth-child(4) {
-            width: 250px;
-            height: 250px;
-            top: 60%;
-            left: 5%;
+            width: 300px;
+            height: 300px;
+            top: 55%;
+            left: 4%;
             animation-delay: -15s;
             background: rgba(30, 125, 224, 0.04);
+        }
+        .bg-shape:nth-child(5) {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            left: 20%;
+            animation-delay: -3s;
+            background: rgba(13, 71, 161, 0.07);
+        }
+        .bg-shape:nth-child(6) {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            right: 25%;
+            animation-delay: -12s;
+            background: rgba(30, 125, 224, 0.06);
         }
         @keyframes floatShape {
             0%,
             100% {
-                transform: translate(0, 0) scale(1);
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                border-radius: 50%;
             }
             25% {
-                transform: translate(30px, -40px) scale(1.05);
+                transform: translate(40px, -50px) scale(1.1) rotate(5deg);
+                border-radius: 45% 55% 60% 40%;
             }
             50% {
-                transform: translate(-20px, 25px) scale(0.95);
+                transform: translate(-25px, 35px) scale(0.92) rotate(-3deg);
+                border-radius: 55% 45% 40% 60%;
             }
             75% {
-                transform: translate(15px, -15px) scale(1.02);
+                transform: translate(20px, -20px) scale(1.05) rotate(2deg);
+                border-radius: 48% 52% 55% 45%;
             }
         }
 
-        /* Page transitions */
+        /* ===== PAGE TRANSITIONS ===== */
         .page {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             display: none;
-            animation: fadeSlideIn 0.5s ease-out;
+            animation: pageIn 0.7s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .page.active {
             display: block;
         }
-        @keyframes fadeSlideIn {
+        @keyframes pageIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px) scale(0.98);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
         @keyframes fadeIn {
@@ -156,7 +239,7 @@
         @keyframes cardAppear {
             from {
                 opacity: 0;
-                transform: translateY(25px) scale(0.97);
+                transform: translateY(35px) scale(0.94);
             }
             to {
                 opacity: 1;
@@ -169,16 +252,16 @@
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-8px);
+                transform: translateY(-10px);
             }
         }
         @keyframes pulseGlow {
             0%,
             100% {
-                box-shadow: 0 0 20px rgba(30, 125, 224, 0.2);
+                box-shadow: 0 0 25px rgba(30, 125, 224, 0.25);
             }
             50% {
-                box-shadow: 0 0 50px rgba(30, 125, 224, 0.4);
+                box-shadow: 0 0 60px rgba(30, 125, 224, 0.5);
             }
         }
         @keyframes shimmer {
@@ -195,10 +278,10 @@
                 opacity: 0;
             }
             50% {
-                transform: scale(1.05);
+                transform: scale(1.08);
             }
             70% {
-                transform: scale(0.9);
+                transform: scale(0.92);
             }
             100% {
                 transform: scale(1);
@@ -208,7 +291,7 @@
         @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(-15px);
+                transform: translateY(-25px);
             }
             to {
                 opacity: 1;
@@ -224,6 +307,99 @@
                 border-color: var(--blue-500);
             }
         }
+        @keyframes waveGlow {
+            0%,
+            100% {
+                text-shadow: 0 0 10px rgba(30, 125, 224, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(30, 125, 224, 0.7), 0 0 60px rgba(30, 125, 224, 0.4);
+            }
+        }
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        @keyframes blinkCursor {
+            0%,
+            100% {
+                border-right-color: var(--blue-500);
+            }
+            50% {
+                border-right-color: transparent;
+            }
+        }
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(200px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        @keyframes progressBar {
+            from {
+                width: 100%;
+            }
+            to {
+                width: 0%;
+            }
+        }
+        @keyframes spinSlow {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes scaleInOut {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+        @keyframes borderGlowMove {
+            0% {
+                box-shadow: 0 0 15px rgba(30, 125, 224, 0.3), inset 0 0 15px rgba(30, 125, 224, 0.05);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(30, 125, 224, 0.6), inset 0 0 25px rgba(30, 125, 224, 0.1);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(30, 125, 224, 0.3), inset 0 0 15px rgba(30, 125, 224, 0.05);
+            }
+        }
 
         /* ===== TOP NAVIGATION ===== */
         .top-nav {
@@ -232,20 +408,21 @@
             left: 0;
             right: 0;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.93);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border-bottom: 1px solid var(--border-light);
             padding: 14px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             transition: var(--transition);
-            box-shadow: 0 1px 15px rgba(10, 42, 94, 0.05);
+            box-shadow: 0 1px 20px rgba(10, 42, 94, 0.06);
         }
         .top-nav.scrolled {
-            box-shadow: 0 5px 30px rgba(10, 42, 94, 0.12);
+            box-shadow: 0 8px 40px rgba(10, 42, 94, 0.14);
             padding: 10px 32px;
+            background: rgba(255, 255, 255, 0.97);
         }
         .nav-logo {
             font-size: 1.35rem;
@@ -258,32 +435,48 @@
             letter-spacing: -0.5px;
             transition: var(--transition);
             text-decoration: none;
+            position: relative;
         }
         .nav-logo:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
             color: var(--blue-600);
         }
         .nav-logo .icon {
             font-size: 1.7rem;
             animation: floatIcon 3s ease-in-out infinite;
             display: inline-block;
-        }
-        .nav-logo .logo-text {
-            font-weight: 800;
+            filter: drop-shadow(0 2px 8px rgba(30, 125, 224, 0.3));
         }
         .nav-logo .logo-domain {
             color: var(--blue-500);
+            position: relative;
+        }
+        .nav-logo .logo-domain::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue-500);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+        .nav-logo:hover .logo-domain::after {
+            width: 100%;
         }
         .nav-badge {
             background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
             color: #fff;
             font-size: 0.65rem;
             font-weight: 700;
-            padding: 3px 10px;
+            padding: 3px 12px;
             border-radius: 20px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
             margin-left: 4px;
+            animation: pulseGlow 2.5s ease-in-out infinite;
+            box-shadow: 0 2px 10px rgba(30, 125, 224, 0.4);
         }
         .nav-breadcrumb {
             display: flex;
@@ -299,22 +492,36 @@
             transition: var(--transition);
             font-weight: 600;
             text-decoration: none;
+            position: relative;
         }
         .nav-breadcrumb .crumb-link:hover {
             color: var(--blue-800);
-            text-decoration: underline;
-            text-underline-offset: 3px;
+        }
+        .nav-breadcrumb .crumb-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue-500);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+        .nav-breadcrumb .crumb-link:hover::after {
+            width: 100%;
         }
         .nav-breadcrumb .sep {
             color: var(--text-muted);
             opacity: 0.6;
             font-weight: 400;
+            animation: fadeIn 0.5s ease-out;
         }
 
         /* ===== HEADER ===== */
         .site-header {
             text-align: center;
-            padding: 90px 20px 35px;
+            padding: 90px 20px 30px;
             position: relative;
             max-width: 900px;
             margin: 0 auto;
@@ -323,28 +530,39 @@
             display: inline-block;
             background: var(--light-blue);
             color: var(--blue-700);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            padding: 6px 18px;
+            padding: 7px 20px;
             border-radius: 30px;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             border: 1px solid var(--border-blue);
+            animation: slideDown 0.7s ease-out;
+            transition: var(--transition);
+        }
+        .site-header .badge-top:hover {
+            background: var(--blue-100);
+            border-color: var(--blue-300);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-sm);
         }
         .site-header h1 {
-            font-size: 3.6rem;
+            font-size: 3.8rem;
             font-weight: 900;
-            letter-spacing: -2px;
+            letter-spacing: -2.5px;
             margin-bottom: 10px;
             color: var(--navy);
             line-height: 1.1;
+            animation: waveGlow 4s ease-in-out infinite;
         }
         .site-header h1 .highlight {
-            background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+            background: linear-gradient(135deg, var(--blue-500), var(--blue-700), var(--blue-500));
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: shimmer 3s linear infinite;
         }
         .site-header .subtitle {
             font-size: 1.1rem;
@@ -352,29 +570,48 @@
             letter-spacing: 0.5px;
             font-weight: 400;
             margin-bottom: 5px;
+            animation: slideDown 0.9s ease-out;
+        }
+        .site-header .typing-container {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--blue-500);
+            animation: typing 2.5s steps(50, end) infinite, blinkCursor 0.7s step-end infinite;
+            max-width: 100%;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
         }
         .site-header .year-tag {
             display: inline-block;
             background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+            background-size: 200% auto;
             color: #fff;
             font-weight: 700;
-            padding: 7px 22px;
+            padding: 8px 26px;
             border-radius: 30px;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            margin-top: 12px;
-            animation: pulseGlow 2.5s ease-in-out infinite;
-            box-shadow: 0 4px 20px rgba(30, 125, 224, 0.3);
+            margin-top: 14px;
+            animation: pulseGlow 2.5s ease-in-out infinite, shimmer 3s linear infinite;
+            box-shadow: 0 6px 25px rgba(30, 125, 224, 0.35);
+            transition: var(--transition);
+            cursor: default;
+        }
+        .site-header .year-tag:hover {
+            transform: scale(1.06);
+            box-shadow: 0 10px 35px rgba(30, 125, 224, 0.5);
         }
         .header-divider {
-            width: 160px;
-            height: 3px;
+            width: 180px;
+            height: 4px;
             background: linear-gradient(90deg, transparent, var(--blue-500), var(--blue-300), var(--blue-500), transparent);
-            margin: 18px auto 25px;
+            margin: 18px auto 22px;
             border-radius: 3px;
             background-size: 200% auto;
-            animation: shimmer 3s linear infinite;
+            animation: shimmer 2.5s linear infinite;
         }
 
         /* ===== SUBJECT CARDS ===== */
@@ -382,10 +619,11 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 28px;
+            gap: 30px;
             padding: 15px 30px 45px;
             max-width: 1200px;
             margin: 0 auto;
+            perspective: 1200px;
         }
         .subject-card {
             background: var(--white);
@@ -394,12 +632,14 @@
             padding: 38px 30px;
             width: 320px;
             cursor: pointer;
-            transition: var(--transition);
+            transition: var(--transition-bounce);
             position: relative;
             overflow: hidden;
             text-align: center;
             box-shadow: var(--shadow-sm);
-            animation: cardAppear 0.7s ease-out both;
+            animation: cardAppear 0.8s ease-out both;
+            transform-style: preserve-3d;
+            will-change: transform;
         }
         .subject-card:nth-child(1) {
             animation-delay: 0.1s;
@@ -416,10 +656,12 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            height: 5px;
             background: linear-gradient(90deg, var(--blue-300), var(--blue-600), var(--blue-300));
+            background-size: 200% auto;
             opacity: 0;
             transition: var(--transition);
+            animation: shimmer 2s linear infinite;
         }
         .subject-card::after {
             content: '';
@@ -428,8 +670,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(30, 125, 224, 0.04), transparent);
-            transition: 0.6s;
+            background: linear-gradient(90deg, transparent, rgba(30, 125, 224, 0.05), transparent);
+            transition: 0.7s;
         }
         .subject-card:hover::before {
             opacity: 1;
@@ -438,9 +680,10 @@
             left: 100%;
         }
         .subject-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-12px) scale(1.02);
             border-color: var(--blue-300);
             box-shadow: var(--shadow-lg), var(--shadow-glow);
+            animation: borderGlowMove 2s ease-in-out infinite;
         }
         .subject-card .subject-icon {
             font-size: 3.2rem;
@@ -448,19 +691,38 @@
             animation: floatIcon 3s ease-in-out infinite;
             display: block;
             background: var(--light-blue);
-            width: 80px;
-            height: 80px;
-            line-height: 80px;
+            width: 85px;
+            height: 85px;
+            line-height: 85px;
             border-radius: 50%;
             margin-left: auto;
             margin-right: auto;
-            border: 1px solid var(--border-blue);
-            transition: var(--transition);
+            border: 2px solid var(--border-blue);
+            transition: var(--transition-bounce);
+            position: relative;
         }
         .subject-card:hover .subject-icon {
             background: var(--blue-100);
-            transform: scale(1.08);
-            border-color: var(--blue-300);
+            transform: scale(1.15) rotate(5deg);
+            border-color: var(--blue-400);
+            box-shadow: 0 0 30px rgba(30, 125, 224, 0.3);
+        }
+        .subject-card .subject-icon::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 50%;
+            border: 2px solid var(--blue-300);
+            opacity: 0;
+            transition: var(--transition);
+            animation: spinSlow 4s linear infinite;
+        }
+        .subject-card:hover .subject-icon::after {
+            opacity: 1;
+            border-color: var(--blue-400);
         }
         .subject-card h3 {
             font-size: 1.4rem;
@@ -468,6 +730,12 @@
             margin-bottom: 10px;
             letter-spacing: -0.5px;
             color: var(--navy);
+            position: relative;
+            transition: var(--transition);
+        }
+        .subject-card:hover h3 {
+            color: var(--blue-700);
+            text-shadow: 0 0 20px rgba(30, 125, 224, 0.2);
         }
         .subject-card .subject-desc {
             font-size: 0.85rem;
@@ -482,24 +750,32 @@
             color: var(--blue-500);
             font-weight: 700;
             background: var(--light-blue);
-            padding: 6px 14px;
+            padding: 7px 16px;
             border-radius: 20px;
             display: inline-block;
             border: 1px solid var(--border-blue);
+            transition: var(--transition);
+        }
+        .subject-card:hover .package-count {
+            background: var(--blue-500);
+            color: #fff;
+            border-color: var(--blue-500);
+            box-shadow: 0 4px 15px rgba(30, 125, 224, 0.4);
         }
         .subject-card .arrow-indicator {
             position: absolute;
             bottom: 18px;
             right: 20px;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--blue-400);
             opacity: 0;
-            transition: var(--transition);
-            transform: translateX(-10px);
+            transition: var(--transition-bounce);
+            transform: translateX(-15px);
         }
         .subject-card:hover .arrow-indicator {
             opacity: 1;
             transform: translateX(0);
+            animation: scaleInOut 1s ease-in-out infinite;
         }
 
         /* ===== BACK BUTTON ===== */
@@ -510,22 +786,37 @@
             background: var(--white);
             border: 1.5px solid var(--border-light);
             color: var(--text-primary);
-            padding: 12px 26px;
+            padding: 13px 28px;
             border-radius: 30px;
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: 600;
             letter-spacing: 0.5px;
-            transition: var(--transition);
+            transition: var(--transition-bounce);
             margin-bottom: 20px;
             text-transform: uppercase;
             box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(30, 125, 224, 0.1), transparent);
+            transition: 0.6s;
+        }
+        .back-btn:hover::before {
+            left: 100%;
         }
         .back-btn:hover {
             background: var(--light-blue);
             border-color: var(--blue-300);
             color: var(--blue-700);
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-md), 0 0 25px rgba(30, 125, 224, 0.2);
             transform: translateX(-5px);
         }
         .back-btn .arrow {
@@ -533,7 +824,8 @@
             transition: var(--transition);
         }
         .back-btn:hover .arrow {
-            transform: translateX(-4px);
+            transform: translateX(-5px);
+            animation: scaleInOut 0.5s ease-in-out;
         }
 
         /* ===== PACKAGES HEADER ===== */
@@ -549,12 +841,14 @@
             letter-spacing: -1px;
             margin-bottom: 8px;
             color: var(--navy);
+            animation: waveGlow 4s ease-in-out infinite;
         }
         .packages-header .packages-sub {
             color: var(--text-secondary);
             font-size: 0.95rem;
             letter-spacing: 0.3px;
             line-height: 1.6;
+            animation: slideDown 0.8s ease-out;
         }
 
         /* ===== PACKAGE CARDS ===== */
@@ -566,6 +860,7 @@
             padding: 25px 30px 50px;
             max-width: 1300px;
             margin: 0 auto;
+            perspective: 1500px;
         }
         .package-card {
             background: var(--white);
@@ -573,13 +868,14 @@
             border-radius: var(--radius-lg);
             padding: 28px 24px;
             width: 340px;
-            transition: var(--transition);
+            transition: var(--transition-bounce);
             position: relative;
             overflow: hidden;
-            animation: cardAppear 0.6s ease-out both;
+            animation: cardAppear 0.7s ease-out both;
             display: flex;
             flex-direction: column;
             box-shadow: var(--shadow-sm);
+            will-change: transform;
         }
         .package-card:nth-child(1) {
             animation-delay: 0.05s;
@@ -606,7 +902,7 @@
             animation-delay: 0.4s;
         }
         .package-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px) scale(1.02);
             border-color: var(--blue-300);
             box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
@@ -618,11 +914,18 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 4px 12px;
+            padding: 5px 14px;
             border-radius: 15px;
             background: var(--light-blue);
             color: var(--blue-600);
             border: 1px solid var(--border-blue);
+            transition: var(--transition);
+        }
+        .package-card:hover .package-badge {
+            background: var(--blue-500);
+            color: #fff;
+            border-color: var(--blue-500);
+            box-shadow: 0 3px 10px rgba(30, 125, 224, 0.4);
         }
         .package-card .package-icon {
             font-size: 2.4rem;
@@ -635,12 +938,14 @@
             border-radius: 14px;
             text-align: center;
             border: 1px solid var(--border-blue);
-            transition: var(--transition);
+            transition: var(--transition-bounce);
+            animation: floatIcon 3s ease-in-out infinite;
         }
         .package-card:hover .package-icon {
             background: var(--blue-100);
             border-color: var(--blue-300);
-            transform: scale(1.06);
+            transform: scale(1.1) rotate(-3deg);
+            box-shadow: 0 0 25px rgba(30, 125, 224, 0.25);
         }
         .package-card h4 {
             font-size: 1.15rem;
@@ -649,6 +954,10 @@
             letter-spacing: -0.3px;
             color: var(--navy);
             line-height: 1.3;
+            transition: var(--transition);
+        }
+        .package-card:hover h4 {
+            color: var(--blue-700);
         }
         .package-card .price {
             font-size: 1.55rem;
@@ -656,6 +965,11 @@
             color: var(--blue-700);
             margin-bottom: 6px;
             letter-spacing: -0.5px;
+            transition: var(--transition);
+        }
+        .package-card:hover .price {
+            color: var(--blue-600);
+            text-shadow: 0 0 15px rgba(30, 125, 224, 0.25);
         }
         .package-card .price .lkr {
             font-size: 0.8rem;
@@ -677,6 +991,7 @@
             content: '✓';
             font-weight: 900;
             font-size: 0.85rem;
+            animation: scaleInOut 2s ease-in-out infinite;
         }
         .package-card .desc {
             font-size: 0.85rem;
@@ -687,6 +1002,7 @@
         }
         .buy-btn {
             background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+            background-size: 200% auto;
             color: #fff;
             border: none;
             padding: 14px 20px;
@@ -696,7 +1012,7 @@
             cursor: pointer;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            transition: var(--transition);
+            transition: var(--transition-bounce);
             width: 100%;
             position: relative;
             overflow: hidden;
@@ -704,7 +1020,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(30, 125, 224, 0.3);
+            box-shadow: 0 4px 18px rgba(30, 125, 224, 0.3);
         }
         .buy-btn::before {
             content: '';
@@ -713,23 +1029,46 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: 0.5s;
+        }
+        .buy-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s, opacity 0.6s;
+            opacity: 0;
+        }
+        .buy-btn:active::after {
+            width: 200px;
+            height: 200px;
+            opacity: 1;
+            transition: width 0s, height 0s, opacity 0.4s;
         }
         .buy-btn:hover::before {
             left: 100%;
         }
         .buy-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(30, 125, 224, 0.45);
-            background: linear-gradient(135deg, var(--blue-600), var(--blue-800));
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(30, 125, 224, 0.5);
+            background-position: right center;
         }
         .buy-btn:active {
-            transform: translateY(0);
+            transform: translateY(0) scale(0.98);
             box-shadow: 0 4px 12px rgba(30, 125, 224, 0.3);
         }
         .buy-btn .lock-icon {
             font-size: 1rem;
+            transition: var(--transition-bounce);
+        }
+        .buy-btn:hover .lock-icon {
+            transform: scale(1.2) rotate(-10deg);
         }
 
         /* ===== FOOTER ===== */
@@ -742,6 +1081,7 @@
             letter-spacing: 0.5px;
             background: var(--white);
             margin-top: auto;
+            position: relative;
         }
         .site-footer .footer-link {
             color: var(--blue-600);
@@ -749,11 +1089,24 @@
             transition: var(--transition);
             font-weight: 600;
             text-decoration: none;
+            position: relative;
+        }
+        .site-footer .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue-500);
+            transition: var(--transition);
+            border-radius: 2px;
         }
         .site-footer .footer-link:hover {
             color: var(--blue-800);
-            text-decoration: underline;
-            text-underline-offset: 3px;
+        }
+        .site-footer .footer-link:hover::after {
+            width: 100%;
         }
 
         /* ===== TOAST ===== */
@@ -770,20 +1123,22 @@
             font-weight: 600;
             color: var(--text-primary);
             box-shadow: var(--shadow-lg), var(--shadow-glow);
-            transform: translateX(120%);
-            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateX(130%);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             display: flex;
             align-items: center;
             gap: 12px;
             max-width: 420px;
-            border-left: 4px solid var(--blue-500);
+            border-left: 5px solid var(--blue-500);
+            overflow: hidden;
         }
         .toast.show {
             transform: translateX(0);
+            animation: borderGlowMove 2s ease-in-out infinite;
         }
         .toast .toast-icon {
             font-size: 1.8rem;
-            animation: bounceIn 0.5s ease-out;
+            animation: bounceIn 0.6s ease-out;
         }
         .toast .toast-close {
             background: none;
@@ -804,16 +1159,46 @@
         .toast .toast-close:hover {
             color: var(--text-primary);
             background: var(--light-blue);
+            transform: rotate(90deg);
+        }
+        .toast .toast-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue-500), var(--blue-300));
+            width: 100%;
+            animation: progressBar 3.5s linear forwards;
+            border-radius: 0 2px 0 0;
+        }
+
+        /* ===== CONFETTI ===== */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 300;
+            overflow: hidden;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confettiFall 1.5s ease-out forwards;
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .site-header h1 {
-                font-size: 2.2rem;
+                font-size: 2.4rem;
                 letter-spacing: -1px;
             }
             .site-header .badge-top {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
                 padding: 5px 14px;
             }
             .subject-card {
@@ -856,15 +1241,21 @@
                 font-size: 1.1rem;
             }
             .subject-card .subject-icon {
-                width: 60px;
-                height: 60px;
-                line-height: 60px;
+                width: 65px;
+                height: 65px;
+                line-height: 65px;
                 font-size: 2.5rem;
+            }
+            .site-header .typing-container {
+                font-size: 0.75rem;
+                white-space: normal;
+                border-right: none;
+                animation: none;
             }
         }
         @media (max-width: 480px) {
             .site-header h1 {
-                font-size: 1.7rem;
+                font-size: 1.8rem;
             }
             .site-header .subtitle {
                 font-size: 0.85rem;
@@ -889,19 +1280,31 @@
 </head>
 <body>
 
-    <!-- Background Shapes -->
+    <!-- Cursor Glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Background Grid -->
+    <div class="bg-grid"></div>
+
+    <!-- Floating Shapes -->
     <div class="bg-shapes">
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
         <div class="bg-shape"></div>
         <div class="bg-shape"></div>
         <div class="bg-shape"></div>
         <div class="bg-shape"></div>
     </div>
 
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
     <!-- Toast Notification -->
     <div class="toast" id="toast">
         <span class="toast-icon">🔓</span>
         <span id="toastMessage">Lesson Unlocked!</span>
         <button class="toast-close" onclick="hideToast()">×</button>
+        <div class="toast-progress" id="toastProgress"></div>
     </div>
 
     <!-- Top Navigation -->
@@ -922,26 +1325,27 @@
             <span class="badge-top">📋 Advanced Level Paper Skill Builder</span>
             <h1>almpi.<span class="highlight">com.lk</span></h1>
             <p class="subtitle">Master your A/L subjects with quality training packages & marking schemes</p>
+            <div class="typing-container">Learn • Practice • Excel • Achieve Your 2026 Goals</div>
             <div class="header-divider"></div>
             <span class="year-tag">🎯 2026 Examination</span>
         </header>
 
         <div class="subjects-container">
-            <div class="subject-card" onclick="showSubject('math')">
+            <div class="subject-card" onclick="showSubject('math')" data-tilt>
                 <div class="subject-icon">📐</div>
                 <h3>Combined Maths</h3>
                 <p class="subject-desc">Access integration, differentiation, trigonometry, limits, series, and complex numbers packages with quality marking schemes.</p>
                 <span class="package-count">6 Packages</span>
                 <span class="arrow-indicator">→</span>
             </div>
-            <div class="subject-card" onclick="showSubject('physics')">
+            <div class="subject-card" onclick="showSubject('physics')" data-tilt>
                 <div class="subject-icon">⚡</div>
                 <h3>Physics</h3>
                 <p class="subject-desc">Explore mechanics, optics, waves, magnetism, and heat training packages with quality marking schemes.</p>
                 <span class="package-count">5 Packages</span>
                 <span class="arrow-indicator">→</span>
             </div>
-            <div class="subject-card" onclick="showSubject('ict')">
+            <div class="subject-card" onclick="showSubject('ict')" data-tilt>
                 <div class="subject-icon">💻</div>
                 <h3>ICT</h3>
                 <p class="subject-desc">Master database, networking, Python, PHP/HTML/CSS, operating systems, logic gates, number systems, and system development.</p>
@@ -965,7 +1369,7 @@
             <p class="packages-sub">Access integration, differentiation, trigonometry, limits, series, and complex numbers packages with quality marking schemes.</p>
         </div>
         <div class="packages-container">
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">CM-01</span>
                 <span class="package-icon">∫</span>
                 <h4>Integration Training Package</h4>
@@ -974,7 +1378,7 @@
                 <p class="desc">Comprehensive calculus problem sets focusing on complex integration techniques, standard substitutions, and proofs.</p>
                 <button class="buy-btn" onclick="unlockLesson('Integration Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">CM-02</span>
                 <span class="package-icon">∂</span>
                 <h4>Differentiation Training Package</h4>
@@ -983,7 +1387,7 @@
                 <p class="desc">Advanced derivatives, chain rule applications, implicit differentiation, tangents, normals, and optimization problems.</p>
                 <button class="buy-btn" onclick="unlockLesson('Differentiation Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">CM-03</span>
                 <span class="package-icon">△</span>
                 <h4>Trigonometry Training Package</h4>
@@ -992,7 +1396,7 @@
                 <p class="desc">Trigonometric identities, compound angles, equations, properties of triangles, and inverse trigonometric functions.</p>
                 <button class="buy-btn" onclick="unlockLesson('Trigonometry Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">CM-04</span>
                 <span class="package-icon">lim</span>
                 <h4>Limits Training Package</h4>
@@ -1001,7 +1405,7 @@
                 <p class="desc">Evaluating algebraic and trigonometric limits, standard forms, L'Hôpital's rule applications, and continuity principles.</p>
                 <button class="buy-btn" onclick="unlockLesson('Limits Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">CM-05</span>
                 <span class="package-icon">Σ</span>
                 <h4>Series Training Package</h4>
@@ -1010,7 +1414,7 @@
                 <p class="desc">Arithmetic and geometric progressions, binomial expansions, convergence tests, and summation of special series.</p>
                 <button class="buy-btn" onclick="unlockLesson('Series Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">CM-06</span>
                 <span class="package-icon">ℂ</span>
                 <h4>Complex Numbers Training Package</h4>
@@ -1035,7 +1439,7 @@
             <p class="packages-sub">Explore mechanics, optics, waves, magnetism, and heat training packages with quality marking schemes.</p>
         </div>
         <div class="packages-container">
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">PHY-01</span>
                 <span class="package-icon">⚙️</span>
                 <h4>Mechanics Training Package</h4>
@@ -1044,7 +1448,7 @@
                 <p class="desc">Advanced particle dynamics, kinematics, and statics problem sets built for top-tier candidates.</p>
                 <button class="buy-btn" onclick="unlockLesson('Mechanics Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">PHY-02</span>
                 <span class="package-icon">🔦</span>
                 <h4>Optics Training Package</h4>
@@ -1053,7 +1457,7 @@
                 <p class="desc">Ray optics, wave fronts, interference, and diffraction problem papers with complete solutions.</p>
                 <button class="buy-btn" onclick="unlockLesson('Optics Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">PHY-03</span>
                 <span class="package-icon">🌊</span>
                 <h4>Waves Training Package</h4>
@@ -1062,7 +1466,7 @@
                 <p class="desc">Mechanical waves, sound propagation, stationary waves, and resonance problem sets.</p>
                 <button class="buy-btn" onclick="unlockLesson('Waves Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">PHY-04</span>
                 <span class="package-icon">🧲</span>
                 <h4>Magnetism Training Package</h4>
@@ -1071,7 +1475,7 @@
                 <p class="desc">Magnetic fields, electromagnetic induction, forces on current-carrying conductors, and flux questions.</p>
                 <button class="buy-btn" onclick="unlockLesson('Magnetism Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">PHY-05</span>
                 <span class="package-icon">🔥</span>
                 <h4>Heat Training Package</h4>
@@ -1096,7 +1500,7 @@
             <p class="packages-sub">Master database, networking, Python, PHP/HTML/CSS, operating systems, logic gates, number systems, and system development.</p>
         </div>
         <div class="packages-container">
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">ICT-01</span>
                 <span class="package-icon">🗄️</span>
                 <h4>Database Training Package</h4>
@@ -1105,7 +1509,7 @@
                 <p class="desc">ER diagrams, relational models, normalization forms, SQL queries, and database management system principles.</p>
                 <button class="buy-btn" onclick="unlockLesson('Database Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">ICT-02</span>
                 <span class="package-icon">🌐</span>
                 <h4>Networking Training Package</h4>
@@ -1114,7 +1518,7 @@
                 <p class="desc">OSI and TCP/IP models, IP addressing, subnetting, network topologies, routing protocols, and security.</p>
                 <button class="buy-btn" onclick="unlockLesson('Networking Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">ICT-03</span>
                 <span class="package-icon">🐍</span>
                 <h4>Python Programming Package</h4>
@@ -1123,7 +1527,7 @@
                 <p class="desc">Control structures, data structures, functions, file handling, error management, and algorithmic problem-solving.</p>
                 <button class="buy-btn" onclick="unlockLesson('Python Programming Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">ICT-04</span>
                 <span class="package-icon">🖥️</span>
                 <h4>Web Development (PHP/HTML/CSS) Package</h4>
@@ -1132,7 +1536,7 @@
                 <p class="desc">Frontend markup, CSS styling, backend form processing with PHP, session handling, and database connectivity.</p>
                 <button class="buy-btn" onclick="unlockLesson('Web Development Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">ICT-05</span>
                 <span class="package-icon">🖱️</span>
                 <h4>Operating Systems Training Package</h4>
@@ -1141,7 +1545,7 @@
                 <p class="desc">Process management, CPU scheduling, memory allocation, virtual memory, file systems, and deadlocks.</p>
                 <button class="buy-btn" onclick="unlockLesson('Operating Systems Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">ICT-06</span>
                 <span class="package-icon">🔢</span>
                 <h4>Logic Gates & Boolean Algebra Package</h4>
@@ -1150,7 +1554,7 @@
                 <p class="desc">Truth tables, Boolean laws, K-maps simplification, combinational circuits, and sequential logic design.</p>
                 <button class="buy-btn" onclick="unlockLesson('Logic Gates & Boolean Algebra Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">ICT-07</span>
                 <span class="package-icon">🔟</span>
                 <h4>Number Systems Training Package</h4>
@@ -1159,7 +1563,7 @@
                 <p class="desc">Binary, octal, decimal, and hexadecimal conversions, signed number representations, and arithmetic operations.</p>
                 <button class="buy-btn" onclick="unlockLesson('Number Systems Training Package')"><span class="lock-icon">🔓</span> Buy & Unlock Lesson</button>
             </div>
-            <div class="package-card">
+            <div class="package-card" data-tilt>
                 <span class="package-badge">ICT-08</span>
                 <span class="package-icon">📋</span>
                 <h4>System Development Life Cycle Package</h4>
@@ -1175,6 +1579,40 @@
     </div>
 
     <script>
+        // ===== Cursor Glow =====
+        const cursorGlow = document.getElementById('cursorGlow');
+        let mouseX = -100,
+            mouseY = -100;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorGlow.style.left = mouseX + 'px';
+            cursorGlow.style.top = mouseY + 'px';
+            cursorGlow.classList.add('visible');
+        });
+        document.addEventListener('mouseleave', () => {
+            cursorGlow.classList.remove('visible');
+        });
+
+        // ===== Tilt Effect =====
+        document.querySelectorAll('[data-tilt]').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 15;
+                const rotateY = (centerX - x) / 15;
+                card.style.transform = `translateY(-10px) perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                card.style.transition = 'transform 0.1s ease-out';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+                card.style.transition = '';
+            });
+        });
+
         // ===== Navigation Functions =====
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1182,6 +1620,12 @@
             if (targetPage) {
                 targetPage.classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Re-trigger animations
+                targetPage.querySelectorAll('.package-card, .subject-card').forEach(el => {
+                    el.style.animation = 'none';
+                    void el.offsetWidth;
+                    el.style.animation = '';
+                });
             }
         }
 
@@ -1215,7 +1659,6 @@
                 sep.textContent = ' › ';
                 bc.appendChild(sep);
                 const current = document.createElement('span');
-                // Remove emoji from display
                 current.textContent = text.replace(/^[^\s]+\s/, '');
                 current.style.color = 'var(--text-muted)';
                 current.style.fontWeight = '500';
@@ -1223,14 +1666,45 @@
             }
         }
 
-        // ===== Toast Functions =====
+        // ===== Confetti =====
+        function spawnConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#1e7de0', '#0d47a1', '#4d9af0', '#a8cdff', '#1565c0', '#f0b400', '#ffffff', '#7ab5f8'];
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-piece';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 8 + 5) + 'px';
+                confetti.style.height = (Math.random() * 8 + 5) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.animationDuration = (Math.random() * 1 + 1) + 's';
+                confetti.style.opacity = Math.random() * 0.8 + 0.2;
+                container.appendChild(confetti);
+                setTimeout(() => {
+                    confetti.remove();
+                }, 2000);
+            }
+        }
+
+        // ===== Toast =====
         let toastTimeout;
+        let progressBar;
 
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').textContent = message;
             toast.classList.add('show');
             clearTimeout(toastTimeout);
+
+            // Reset and restart progress
+            const progress = toast.querySelector('.toast-progress');
+            progress.style.animation = 'none';
+            void progress.offsetWidth;
+            progress.style.animation = 'progressBar 3.5s linear forwards';
+
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('show');
             }, 3500);
@@ -1243,7 +1717,39 @@
 
         // ===== Unlock Lesson =====
         function unlockLesson(packageName) {
+            spawnConfetti();
             showToast('🎉 ' + packageName + ' unlocked successfully! Happy studying!');
+            // Create a burst of confetti around the button
+            const buttons = document.querySelectorAll('.buy-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.includes(packageName.split(' ')[0])) {
+                    const rect = btn.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    spawnLocalConfetti(centerX, centerY);
+                }
+            });
+        }
+
+        function spawnLocalConfetti(x, y) {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#1e7de0', '#0d47a1', '#4d9af0', '#a8cdff', '#1565c0', '#f0b400', '#ffffff', '#7ab5f8'];
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-piece';
+                confetti.style.left = x + (Math.random() - 0.5) * 80 + 'px';
+                confetti.style.top = y + (Math.random() - 0.5) * 40 + 'px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 7 + 4) + 'px';
+                confetti.style.height = (Math.random() * 7 + 4) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                confetti.style.animationDuration = (Math.random() * 0.8 + 0.7) + 's';
+                container.appendChild(confetti);
+                setTimeout(() => {
+                    confetti.remove();
+                }, 1800);
+            }
         }
 
         // ===== Nav Scroll Effect =====
@@ -1270,9 +1776,32 @@
         // ===== Initial Breadcrumb =====
         updateBreadcrumb('Home');
 
-        // ===== Add hover sound-like visual feedback via console (optional) =====
-        console.log('%c📘 almpi.com.lk - A/L Paper Skill Builder (2026)', 'font-size:16px; color:#1e7de0; font-weight:bold;');
-        console.log('%cWhite & Blue Clean Design - All subjects ready!', 'font-size:12px; color:#4a5a7a;');
+        // ===== Button Ripple Effect =====
+        document.querySelectorAll('.buy-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.cssText = `
+                            position: absolute;
+                            width: ${size}px;
+                            height: ${size}px;
+                            left: ${e.clientX - rect.left - size/2}px;
+                            top: ${e.clientY - rect.top - size/2}px;
+                            background: rgba(255,255,255,0.4);
+                            border-radius: 50%;
+                            pointer-events: none;
+                            animation: ripple 0.6s ease-out forwards;
+                            z-index: 1;
+                        `;
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        console.log('%c📘 almpi.com.lk - Enhanced Edition', 'font-size:18px; color:#1e7de0; font-weight:bold; text-shadow:0 0 10px rgba(30,125,224,0.5);');
+        console.log('%c✨ Premium animations & effects loaded!', 'font-size:14px; color:#4a5a7a;');
+        console.log('%c⚡ Tilt cards • Confetti • Cursor glow • Ripple • Typing • Particles', 'font-size:12px; color:#7a8aa5;');
     </script>
 </body>
 </html>
